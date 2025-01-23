@@ -1,6 +1,7 @@
 package com.example.pokedexapp.core
 
 import android.app.Application
+import com.example.pokedexapp.di.repositoryModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
@@ -15,6 +16,7 @@ class MyApp : Application() {
 
         startKoin {
             androidContext(this@MyApp)
+            modules(repositoryModule)
         }
     }
 }
