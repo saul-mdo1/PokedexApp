@@ -1,8 +1,8 @@
 package com.example.pokedexapp.presentation.home
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +10,8 @@ import com.example.pokedexapp.R
 import com.example.pokedexapp.databinding.HomeActivityLayoutBinding
 import com.example.pokedexapp.presentation.home.recyclerview.PokedexRVAdapter
 import com.example.pokedexapp.presentation.home.recyclerview.PokemonItemViewModel
+import com.example.pokedexapp.utils.Result
+import com.example.pokedexapp.utils.showAlertError
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -40,6 +42,27 @@ class HomeActivity : AppCompatActivity() {
                     pokemon = it
                 }
             }
+        }
+
+        viewModel.errorType.observe(this) { error ->
+            if (error == null)
+                return@observe
+
+            val message = when (error) {
+                is Result.NetworkError -> getString(R.string.txt_internet_error)
+                is Result.EmptyResponse -> getString(R.string.txt_emptyInfo_error)
+                else -> getString(R.string.txt_unexpected_error)
+            }
+
+            showAlertError(
+                this,
+                message
+            ) {
+                viewModel.loading.postValue(true)
+                viewModel.getPokemons()
+            }
+
+            viewModel.errorType.postValue(null)
         }
     }
 

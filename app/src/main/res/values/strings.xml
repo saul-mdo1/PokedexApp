@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Pokedex</string>
     <string name="txt_loading">Loading</string>
+    <string name="txt_accept">Accept</string>
+    <string name="txt_retry">Try again</string>
+    <string name="txt_error">Error</string>
+    <string name="txt_unexpected_error">An unexpected error occurred while trying to get the info, please try again.</string>
+    <string name="txt_internet_error">There is no information to show at the moment, please connect the device to an internet connection.</string>
+    <string name="txt_emptyInfo_error">No information to display, try again.</string>
 </resources>

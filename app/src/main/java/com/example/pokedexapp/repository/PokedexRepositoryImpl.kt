@@ -5,8 +5,10 @@ import com.example.pokedexapp.model.Pokemon
 import com.example.pokedexapp.network.PokedexApiService
 import com.example.pokedexapp.utils.Mapper.toEntity
 import com.example.pokedexapp.utils.Mapper.toModel
+import com.example.pokedexapp.utils.Result
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import timber.log.Timber
 import java.io.IOException
 
 class PokedexRepositoryImpl(
@@ -14,27 +16,41 @@ class PokedexRepositoryImpl(
     private val pokedexApi: PokedexApiService
 ) : PokedexRepository {
 
-    override suspend fun get(offset: Int): List<Pokemon> = coroutineScope {
+    override suspend fun get(offset: Int): Result<List<Pokemon>> = coroutineScope {
         try {
             val listResponse = pokedexApi.getAll(offset = offset, limit = 25)
 
-            val detailsList = listResponse.body()?.results?.map { pokemon ->
-                async {
-                    pokedexApi.getById(pokemon.url).body()
+            if (listResponse.isSuccessful) {
+                val basicList = listResponse.body()?.results
+                val detailsList = basicList?.map { pokemon ->
+                    async {
+                        try {
+                            pokedexApi.getById(pokemon.url).body()
+                        } catch (e: Exception) {
+                            null
+                        }
+                    }
+                }?.mapNotNull { it.await() }
+
+                if (!detailsList.isNullOrEmpty()) {
+                    pokedexDao.insertAll(detailsList.map { it.toEntity() })
+                    Result.Success(detailsList.map { it.toModel() })
+                } else {
+                    Result.EmptyResponse
                 }
-            }?.mapNotNull { it.await() }
-
-            if (!detailsList.isNullOrEmpty()) {
-                pokedexDao.insertAll(detailsList.map { it.toEntity() })
+            } else {
+                Timber.d("PokedexRepositoryImpl_TAG: get: list response error ${listResponse.code()} ")
+                Result.Error
             }
-
-            detailsList?.map { it.toModel() } ?: emptyList()
         } catch (e: IOException) {
-            val cachedData = pokedexDao.getAll()
-            if (cachedData.isNotEmpty())
-                cachedData.map { it.toModel() }
+            val offlineData = pokedexDao.getAll()
+            if (offlineData.isNotEmpty())
+                Result.Success(offlineData.map { it.toModel() })
             else
-                emptyList()
+                Result.NetworkError
+        } catch (e: Exception) {
+            Timber.d("PokedexRepositoryImpl_TAG: get: list response error: ${e.message} ")
+            Result.Error
         }
     }
 
