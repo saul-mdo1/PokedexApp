@@ -6,12 +6,12 @@ data class Pokemon(
     val height: Int,
     val weight: Int,
     val types: List<Type>,
-    val abilities: List<Ability>,
-    val stats: List<Stat>,
+    val abilities: List<Ability>?,
+    val stats: List<Stat>?,
     val sprite_back_default: String?,
     val sprite_front_default: String?,
     val front_default: String?,
-    val moves: List<Move>
+    val moves: List<Move>?
 )
 
 data class Type(

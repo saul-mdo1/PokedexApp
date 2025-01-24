@@ -1,5 +1,6 @@
 package com.example.pokedexapp.utils
 
+import com.example.pokedexapp.database.entity.PokemonEntity
 import com.example.pokedexapp.model.Ability
 import com.example.pokedexapp.model.Move
 import com.example.pokedexapp.model.Pokemon
@@ -28,5 +29,32 @@ object Mapper {
         moves = this?.moves?.map { moveResponse ->
             Move(moveResponse.move.name)
         } ?: emptyList()
+    )
+
+    fun PokemonEntity.toModel() = Pokemon(
+        id = this.id,
+        name = this.name,
+        height = this.height,
+        weight = this.weight,
+        sprite_front_default = this.frontalSprite,
+        types = this.types.map {
+            Type(it)
+        },
+        front_default = null,
+        sprite_back_default = null,
+        abilities = null,
+        moves = null,
+        stats = null
+    )
+
+    fun PokemonResponse.toEntity() = PokemonEntity(
+        id = this.id,
+        name = this.name,
+        height = this.height,
+        weight = this.weight,
+        frontalSprite = this.sprites.front_default,
+        types = this.types.map {
+            it.type.name
+        },
     )
 }
