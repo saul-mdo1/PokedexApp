@@ -81,3 +81,8 @@ fun bindStats(linearLayout: LinearLayout, stats: List<Stat>?) {
         linearLayout.addView(itemView)
     }
 }
+
+@BindingAdapter(value = ["spriteUrl", "name"], requireAll = false)
+fun bindAvatar(view: CircularImageView, url: String?, name: String?) {
+    view.setImage(url, name)
+}

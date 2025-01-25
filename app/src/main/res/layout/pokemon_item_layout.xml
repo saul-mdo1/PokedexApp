@@ -20,24 +20,37 @@
         app:cardElevation="4dp"
         app:contentPadding="16dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12dp">
 
+            <com.example.pokedexapp.utils.CircularImageView
+                android:id="@+id/ivSprite"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:initialsBackgroundColor="@color/md_theme_surface"
+                app:initialsTextColor="@color/md_theme_onSurface"
+                app:spriteUrl="@{viewModel.sprite}"
+                app:name="@{viewModel.name}"
+                app:placeholder="@drawable/placeholder" />
+
             <TextView
                 android:id="@+id/tvName"
-                style="@style/TextAppearance.Material3.TitleMedium"
+                style="@style/TextAppearance.Material3.TitleLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.name}"
+                android:layout_gravity="center"
+                android:layout_marginStart="12dp"
                 android:textColor="@color/md_theme_onSurface"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Pikachu" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
 </layout>

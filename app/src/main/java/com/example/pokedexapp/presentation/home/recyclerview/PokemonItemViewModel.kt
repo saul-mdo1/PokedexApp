@@ -9,7 +9,7 @@ class PokemonItemViewModel {
         get() = pokemon?.id ?: 0
 
     val name: String
-        get() = pokemon?.name ?: "---"
+        get() = pokemon?.name?.replaceFirstChar { it.uppercase() } ?: "---"
 
     val sprite: String?
         get() = pokemon?.sprite_front_default
