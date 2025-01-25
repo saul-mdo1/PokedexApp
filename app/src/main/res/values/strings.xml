@@ -15,4 +15,5 @@
     <string name="txt_stats">Stats</string>
     <string name="txt_stat_name_placeholder">%1$s (%2$s)</string>
     <string name="txt_moves">Moves</string>
+    <string name="txt_back">Go back</string>
 </resources>

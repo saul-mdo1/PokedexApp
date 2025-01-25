@@ -3,6 +3,7 @@ package com.example.pokedexapp.presentation.home
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +12,9 @@ import com.example.pokedexapp.databinding.HomeActivityLayoutBinding
 import com.example.pokedexapp.presentation.details.DetailsActivity
 import com.example.pokedexapp.presentation.home.recyclerview.PokedexRVAdapter
 import com.example.pokedexapp.presentation.home.recyclerview.PokemonItemViewModel
+import com.example.pokedexapp.presentation.pokemonImage.PokemonImageActivity
+import com.example.pokedexapp.utils.EXTRA_IMAGE_URL
+import com.example.pokedexapp.utils.EXTRA_TRANSITION_NAME
 import com.example.pokedexapp.utils.POKEMON_ID
 import com.example.pokedexapp.utils.Result
 import com.example.pokedexapp.utils.showAlertError
@@ -70,11 +74,26 @@ class HomeActivity : AppCompatActivity() {
 
     private fun initRecycler() {
         Timber.d("HomeActivity_TAG: initRecycler: ")
-        rvAdapter = PokedexRVAdapter {
-            val intent = Intent(this, DetailsActivity::class.java)
-            intent.putExtra(POKEMON_ID, it.id)
-            startActivity(intent)
-        }
+        rvAdapter = PokedexRVAdapter(
+            itemClicked = {
+                val intent = Intent(this, DetailsActivity::class.java)
+                intent.putExtra(POKEMON_ID, it.id)
+                startActivity(intent)
+            },
+            imageClicked = { item, imageView ->
+                val intent = Intent(this, PokemonImageActivity::class.java).apply {
+                    putExtra(EXTRA_IMAGE_URL, item.sprite)
+                    putExtra(EXTRA_TRANSITION_NAME, imageView.transitionName)
+                }
+
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    this,
+                    imageView,
+                    imageView.transitionName
+                )
+                startActivity(intent, options.toBundle())
+            }
+        )
 
         binding.rvPokedex.apply {
             layoutManager = LinearLayoutManager(this@HomeActivity, RecyclerView.VERTICAL, false)

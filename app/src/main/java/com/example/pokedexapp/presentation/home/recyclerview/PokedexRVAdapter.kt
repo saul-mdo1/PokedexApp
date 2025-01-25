@@ -2,6 +2,7 @@ package com.example.pokedexapp.presentation.home.recyclerview
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -9,7 +10,10 @@ import com.example.pokedexapp.R
 import com.example.pokedexapp.databinding.PokemonItemLayoutBinding
 import timber.log.Timber
 
-class PokedexRVAdapter(private val itemClicked: (PokemonItemViewModel) -> Unit) :
+class PokedexRVAdapter(
+    private val itemClicked: (PokemonItemViewModel) -> Unit,
+    private val imageClicked: (PokemonItemViewModel, imageView: View) -> Unit
+) :
     RecyclerView.Adapter<PokedexRVAdapter.ItemViewHolder>() {
 
     private lateinit var layout: PokemonItemLayoutBinding
@@ -27,6 +31,11 @@ class PokedexRVAdapter(private val itemClicked: (PokemonItemViewModel) -> Unit) 
             itemBinding.root.setOnClickListener {
                 itemClicked(item)
             }
+
+            itemBinding.ivSprite.setOnClickListener {
+                imageClicked(item, it)
+            }
+
             Timber.d("ViewHolder_TAG: bind: ${item.name}")
         }
     }
