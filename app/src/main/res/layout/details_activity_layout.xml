@@ -25,70 +25,109 @@
                 android:layout_height="match_parent"
                 android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/tvName"
-                    android:layout_width="wrap_content"
+                <!-- NAME -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/vName"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.pokemon.name}"
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp"
+                    app:contentPadding="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Pikachu" />
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/ivImage"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        style="@style/TextAppearance.Material3.TitleLarge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@{viewModel.pokemon.name}"
+                        android:textColor="@color/md_theme_onSurface"
+                        tools:text="Pikachu" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- IMAGE -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/vImage"
+                    android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:contentDescription="@string/txt_description_image_details"
                     android:layout_margin="8dp"
                     android:visibility="@{viewModel.imageVisibility}"
-                    app:imageUrl="@{viewModel.pokemon.front_default}"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp"
+                    app:contentPadding="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvName"
-                    tools:scaleType="fitXY"
-                    tools:src="@drawable/ic_launcher_background" />
+                    app:layout_constraintTop_toBottomOf="@id/vName">
 
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/cgTypes"
-                    android:layout_width="wrap_content"
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/txt_description_image_details"
+                        app:imageUrl="@{viewModel.pokemon.front_default}"
+                        tools:scaleType="fitXY"
+                        tools:src="@drawable/ic_launcher_background" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- TYPES -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/vTypes"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal"
-                    app:chipSpacing="8dp"
-                    app:data="@{viewModel.pokemon.types}"
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp"
+                    app:contentPadding="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ivImage"
-                    app:singleLine="false" />
+                    app:layout_constraintTop_toBottomOf="@id/vImage">
 
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal"
+                        app:chipSpacing="8dp"
+                        app:data="@{viewModel.pokemon.types}"
+                        app:singleLine="false" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- HEIGHT -->
                 <TextView
                     android:id="@+id/tvHeightSub"
+                    style="@style/TextAppearance.Material3.BodyLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:text="@string/txt_height_colon"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cgTypes" />
+                    app:layout_constraintTop_toBottomOf="@id/vTypes" />
 
                 <TextView
                     android:id="@+id/tvHeight"
+                    style="@style/TextAppearance.Material3.BodyMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:text="@{viewModel.pokemon.height}"
+                    app:layout_constraintBottom_toBottomOf="@id/tvHeightSub"
                     app:layout_constraintStart_toEndOf="@id/tvHeightSub"
                     app:layout_constraintTop_toTopOf="@id/tvHeightSub"
-                    app:layout_constraintBottom_toBottomOf="@id/tvHeightSub"
                     tools:text="34" />
 
+                <!-- WEIGHT -->
                 <TextView
                     android:id="@+id/tvWeightSub"
+                    style="@style/TextAppearance.Material3.BodyLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/txt_weight_colon"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tvHeightSub"
                     app:layout_constraintTop_toBottomOf="@id/tvHeightSub" />
 
                 <TextView
@@ -96,111 +135,150 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
+                    style="@style/TextAppearance.Material3.BodyMedium"
                     android:text="@{viewModel.pokemon.weight}"
+                    app:layout_constraintBottom_toBottomOf="@id/tvWeightSub"
                     app:layout_constraintStart_toEndOf="@id/tvWeightSub"
                     app:layout_constraintTop_toTopOf="@id/tvWeightSub"
-                    app:layout_constraintBottom_toBottomOf="@id/tvWeightSub"
                     tools:text="89" />
 
+                <!-- ABILITIES -->
                 <TextView
                     android:id="@+id/tvAbilitiesSub"
-                    android:visibility="@{viewModel.abilitiesVisibility}"
+                    style="@style/TextAppearance.Material3.BodyLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/txt_abilities_colon"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:visibility="@{viewModel.abilitiesVisibility}"
+                    app:layout_constraintStart_toStartOf="@id/tvHeightSub"
                     app:layout_constraintTop_toBottomOf="@id/tvWeight" />
 
                 <TextView
                     android:id="@+id/cgAbilities"
-                    android:visibility="@{viewModel.abilitiesVisibility}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    style="@style/TextAppearance.Material3.BodyMedium"
                     android:text="@{viewModel.pokemon.abilities}"
+                    android:visibility="@{viewModel.abilitiesVisibility}"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvAbilitiesSub"
-                    app:layout_constraintEnd_toEndOf="parent"
                     tools:text="blaze | solar-power" />
 
+                <!-- SPRITES -->
                 <TextView
                     android:id="@+id/tvSpritesSub"
+                    style="@style/TextAppearance.Material3.TitleMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/txt_sprites"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tvHeightSub"
                     app:layout_constraintTop_toBottomOf="@id/cgAbilities" />
 
-                <LinearLayout
-                    android:id="@+id/layoutSprites"
-                    android:layout_marginTop="4dp"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/vSprites"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp"
+                    app:contentPadding="16dp"
                     app:layout_constraintTop_toBottomOf="@id/tvSpritesSub">
 
-                    <ImageView
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginEnd="4dp"
-                        android:layout_weight="0.5"
-                        android:contentDescription="@string/txt_description_image_details"
-                        app:imageUrl="@{viewModel.pokemon.sprite_front_default}"
-                        tools:scaleType="fitXY"
-                        tools:src="@drawable/ic_launcher_background" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="4dp"
-                        android:layout_weight="0.5"
-                        android:contentDescription="@string/txt_description_image_details"
-                        app:imageUrl="@{viewModel.pokemon.sprite_back_default}"
-                        tools:scaleType="fitXY"
-                        tools:src="@drawable/ic_launcher_background" />
-                </LinearLayout>
+                        <ImageView
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="4dp"
+                            android:layout_weight="0.5"
+                            android:contentDescription="@string/txt_description_image_details"
+                            app:imageUrl="@{viewModel.pokemon.sprite_front_default}"
+                            tools:scaleType="fitXY"
+                            tools:src="@drawable/ic_launcher_background" />
 
+                        <ImageView
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="4dp"
+                            android:layout_weight="0.5"
+                            android:contentDescription="@string/txt_description_image_details"
+                            app:imageUrl="@{viewModel.pokemon.sprite_back_default}"
+                            tools:scaleType="fitXY"
+                            tools:src="@drawable/ic_launcher_background" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- STATS -->
                 <TextView
-                    android:id="@+id/tvStatsTitle"
+                    android:id="@+id/tvStatsSub"
+                    style="@style/TextAppearance.Material3.TitleMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="8dp"
                     android:text="@string/txt_stats"
                     android:visibility="@{viewModel.statsVisibility}"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/layoutSprites" />
+                    app:layout_constraintStart_toStartOf="@id/tvHeightSub"
+                    app:layout_constraintTop_toBottomOf="@id/vSprites" />
 
-                <LinearLayout
-                    android:id="@+id/llStats"
-                    android:visibility="@{viewModel.statsVisibility}"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/vStats"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:orientation="vertical"
-                    app:statsList="@{viewModel.pokemon.stats}"
+                    android:layout_margin="8dp"
+                    android:visibility="@{viewModel.statsVisibility}"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp"
+                    app:contentPadding="16dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvStatsTitle"/>
+                    app:layout_constraintTop_toBottomOf="@id/tvStatsSub">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:statsList="@{viewModel.pokemon.stats}" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- MOVES -->
                 <TextView
-                    android:id="@+id/tvMovesTitle"
+                    android:id="@+id/tvMovesSub"
+                    style="@style/TextAppearance.Material3.TitleMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="@string/txt_moves"
                     android:visibility="@{viewModel.movesVisibility}"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/llStats" />
+                    app:layout_constraintStart_toStartOf="@id/tvHeightSub"
+                    app:layout_constraintTop_toBottomOf="@id/vStats" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvMoves"
-                    android:visibility="@{viewModel.movesVisibility}"
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/tvMovesTitle"
-                    tools:listitem="@layout/move_item_layout" />
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp"
+                    app:contentPadding="16dp"
+                    android:visibility="@{viewModel.movesVisibility}"
+                    app:layout_constraintTop_toBottomOf="@id/tvMovesSub">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvMoves"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/move_item_layout" />
+
+                </com.google.android.material.card.MaterialCardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -10,6 +10,7 @@
 
     <TextView
         android:id="@+id/tvStatName"
+        android:textColor="@color/md_theme_onSurface"
         android:layout_width="0dp"
         android:textSize="12sp"
         android:layout_height="wrap_content"
@@ -25,6 +26,6 @@
         android:layout_weight="1.5"
         app:trackThickness="4dp"
         android:indeterminate="false"
-        app:indicatorColor="@android:color/holo_blue_dark"
+        app:indicatorColor="@color/md_theme_primary"
         app:trackColor="@android:color/darker_gray" />
 </LinearLayout>

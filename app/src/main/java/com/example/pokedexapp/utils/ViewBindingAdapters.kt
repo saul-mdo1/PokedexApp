@@ -1,6 +1,5 @@
 package com.example.pokedexapp.utils
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -41,7 +40,8 @@ fun setPokemonStringsList(chipGroup: ChipGroup, list: List<String>?) {
             isClickable = false
             isCheckable = false
 
-            setTextColor(Color.BLACK)
+            setChipBackgroundColorResource(R.color.md_theme_inverseOnSurface)
+            elevation = 4f
         }
 
         chipGroup.addView(chip)
