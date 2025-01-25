@@ -5,28 +5,16 @@ data class Pokemon(
     val name: String,
     val height: Int,
     val weight: Int,
-    val types: List<Type>,
-    val abilities: List<Ability>?,
+    val types: List<String>,
+    val abilities: List<String>?,
     val stats: List<Stat>?,
     val sprite_back_default: String?,
     val sprite_front_default: String?,
     val front_default: String?,
-    val moves: List<Move>?
-)
-
-data class Type(
-    val name: String
-)
-
-data class Ability(
-    val name: String
+    val moves: List<String>?
 )
 
 data class Stat(
     val name: String,
     val base_stat: Int
-)
-
-data class Move(
-    val name: String
 )

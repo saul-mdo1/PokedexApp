@@ -25,7 +25,7 @@ class PokedexRepositoryImpl(
                 val detailsList = basicList?.map { pokemon ->
                     async {
                         try {
-                            pokedexApi.getById(pokemon.url).body()
+                            pokedexApi.getDetailsByUrl(pokemon.url).body()
                         } catch (e: Exception) {
                             null
                         }
@@ -54,7 +54,22 @@ class PokedexRepositoryImpl(
         }
     }
 
-    override suspend fun getById(id: Int): Pokemon {
-        TODO("Not yet implemented")
+    override suspend fun getById(id: Int): Result<Pokemon> = coroutineScope {
+        try {
+            val response = pokedexApi.getDetailsById(id)
+            if (response.isSuccessful) {
+                Result.Success(response.body().toModel())
+            } else {
+                Timber.d("PokedexRepositoryImpl_TAG: getById: response error ${response.code()} ")
+                Result.Error
+            }
+        } catch (e: IOException) {
+            val offlineData = pokedexDao.getById(id)
+            Result.Success(offlineData.toModel())
+        } catch (e: Exception) {
+            Timber.d("PokedexRepositoryImpl_TAG: getById: list response error: ${e.message} ")
+            Result.Error
+        }
     }
+
 }

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.pokedexapp.presentation.details.DetailsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".presentation.details.DetailsActivity">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.pokemon.name}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Pikachu" />
+
+                <ImageView
+                    android:id="@+id/ivImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
+                    android:contentDescription="@string/txt_description_image_details"
+                    android:layout_margin="8dp"
+                    android:visibility="@{viewModel.imageVisibility}"
+                    app:imageUrl="@{viewModel.pokemon.front_default}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvName"
+                    tools:scaleType="fitXY"
+                    tools:src="@drawable/ic_launcher_background" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/cgTypes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    app:chipSpacing="8dp"
+                    app:data="@{viewModel.pokemon.types}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivImage"
+                    app:singleLine="false" />
+
+                <TextView
+                    android:id="@+id/tvHeightSub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/txt_height_colon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cgTypes" />
+
+                <TextView
+                    android:id="@+id/tvHeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@{viewModel.pokemon.height}"
+                    app:layout_constraintStart_toEndOf="@id/tvHeightSub"
+                    app:layout_constraintTop_toTopOf="@id/tvHeightSub"
+                    app:layout_constraintBottom_toBottomOf="@id/tvHeightSub"
+                    tools:text="34" />
+
+                <TextView
+                    android:id="@+id/tvWeightSub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/txt_weight_colon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvHeightSub" />
+
+                <TextView
+                    android:id="@+id/tvWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="@{viewModel.pokemon.weight}"
+                    app:layout_constraintStart_toEndOf="@id/tvWeightSub"
+                    app:layout_constraintTop_toTopOf="@id/tvWeightSub"
+                    app:layout_constraintBottom_toBottomOf="@id/tvWeightSub"
+                    tools:text="89" />
+
+                <TextView
+                    android:id="@+id/tvAbilitiesSub"
+                    android:visibility="@{viewModel.abilitiesVisibility}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/txt_abilities_colon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvWeight" />
+
+                <TextView
+                    android:id="@+id/cgAbilities"
+                    android:visibility="@{viewModel.abilitiesVisibility}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.pokemon.abilities}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvAbilitiesSub"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="blaze | solar-power" />
+
+                <TextView
+                    android:id="@+id/tvSpritesSub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/txt_sprites"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cgAbilities" />
+
+                <LinearLayout
+                    android:id="@+id/layoutSprites"
+                    android:layout_marginTop="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/tvSpritesSub">
+
+                    <ImageView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="0.5"
+                        android:contentDescription="@string/txt_description_image_details"
+                        app:imageUrl="@{viewModel.pokemon.sprite_front_default}"
+                        tools:scaleType="fitXY"
+                        tools:src="@drawable/ic_launcher_background" />
+
+                    <ImageView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="0.5"
+                        android:contentDescription="@string/txt_description_image_details"
+                        app:imageUrl="@{viewModel.pokemon.sprite_back_default}"
+                        tools:scaleType="fitXY"
+                        tools:src="@drawable/ic_launcher_background" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvStatsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/txt_stats"
+                    android:visibility="@{viewModel.statsVisibility}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layoutSprites" />
+
+                <LinearLayout
+                    android:id="@+id/llStats"
+                    android:visibility="@{viewModel.statsVisibility}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    app:statsList="@{viewModel.pokemon.stats}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvStatsTitle"/>
+
+                <TextView
+                    android:id="@+id/tvMovesTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/txt_moves"
+                    android:visibility="@{viewModel.movesVisibility}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/llStats" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvMoves"
+                    android:visibility="@{viewModel.movesVisibility}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tvMovesTitle"
+                    tools:listitem="@layout/move_item_layout" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <include
+            layout="@layout/loading_layout"
+            app:loading="@{viewModel.loading}"
+            tools:visibility="gone" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

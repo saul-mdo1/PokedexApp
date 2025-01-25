@@ -5,5 +5,5 @@ import com.example.pokedexapp.utils.Result
 
 interface PokedexRepository {
     suspend fun get(offset: Int): Result<List<Pokemon>>
-    suspend fun getById(id: Int): Pokemon
+    suspend fun getById(id: Int): Result<Pokemon>
 }

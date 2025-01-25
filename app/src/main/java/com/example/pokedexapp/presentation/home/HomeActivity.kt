@@ -1,15 +1,17 @@
 package com.example.pokedexapp.presentation.home
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokedexapp.R
 import com.example.pokedexapp.databinding.HomeActivityLayoutBinding
+import com.example.pokedexapp.presentation.details.DetailsActivity
 import com.example.pokedexapp.presentation.home.recyclerview.PokedexRVAdapter
 import com.example.pokedexapp.presentation.home.recyclerview.PokemonItemViewModel
+import com.example.pokedexapp.utils.POKEMON_ID
 import com.example.pokedexapp.utils.Result
 import com.example.pokedexapp.utils.showAlertError
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -69,7 +71,9 @@ class HomeActivity : AppCompatActivity() {
     private fun initRecycler() {
         Timber.d("HomeActivity_TAG: initRecycler: ")
         rvAdapter = PokedexRVAdapter {
-            Toast.makeText(this, "POKEMON CLICKED: ${it.name}", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, DetailsActivity::class.java)
+            intent.putExtra(POKEMON_ID, it.id)
+            startActivity(intent)
         }
 
         binding.rvPokedex.apply {

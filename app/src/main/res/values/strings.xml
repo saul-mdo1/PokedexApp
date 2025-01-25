@@ -7,4 +7,12 @@
     <string name="txt_unexpected_error">An unexpected error occurred while trying to get the info, please try again.</string>
     <string name="txt_internet_error">There is no information to show at the moment, please connect the device to an internet connection.</string>
     <string name="txt_emptyInfo_error">No information to display, try again.</string>
+    <string name="txt_description_image_details">Pokemon image</string>
+    <string name="txt_height_colon">Height:</string>
+    <string name="txt_weight_colon">Weight:</string>
+    <string name="txt_abilities_colon">Abilities:</string>
+    <string name="txt_sprites">Sprites</string>
+    <string name="txt_stats">Stats</string>
+    <string name="txt_stat_name_placeholder">%1$s (%2$s)</string>
+    <string name="txt_moves">Moves</string>
 </resources>
