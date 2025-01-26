@@ -14,10 +14,14 @@ class PokedexRVAdapter(
     private val imageClicked: (PokemonItemViewModel, imageView: View) -> Unit,
     private val favoriteClicked: (PokemonItemViewModel, Boolean) -> Unit
 ) :
-    RecyclerView.Adapter<PokedexRVAdapter.ItemViewHolder>() {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private lateinit var layout: PokemonItemLayoutBinding
     private val itemsList: MutableList<PokemonItemViewModel> = mutableListOf()
+
+    private val VIEW_TYPE_ITEM = 0
+    private val VIEW_TYPE_LOADING = 1
+    private var isLoading = false
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateList(newItems: List<PokemonItemViewModel>) {
@@ -43,24 +47,62 @@ class PokedexRVAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        layout = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
-            R.layout.pokemon_item_layout,
-            parent,
-            false
-        )
-        return ItemViewHolder(layout)
+    inner class LoadingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == VIEW_TYPE_ITEM) {
+            layout = DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.pokemon_item_layout,
+                parent,
+                false
+            )
+            ItemViewHolder(layout)
+        } else {
+            val progressBarLayout = LayoutInflater.from(parent.context)
+                .inflate(R.layout.loading_item_layout, parent, false)
+            LoadingViewHolder(progressBarLayout)
+        }
     }
 
     override fun getItemCount(): Int = itemsList.size
 
-    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val pokemon = itemsList[position]
-        holder.itemBinding.viewModel = pokemon
-        holder.bind(pokemon)
-        holder.itemBinding.executePendingBindings()
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is ItemViewHolder) {
+            val pokemon = itemsList[position]
+            holder.itemBinding.viewModel = pokemon
+            pokemon.let { holder.bind(it) }
+            holder.itemBinding.executePendingBindings()
+        }
     }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (itemsList[position].pokemon == null)
+            VIEW_TYPE_LOADING
+        else
+            VIEW_TYPE_ITEM
+    }
+
+    fun showLoading(isLoading: Boolean) {
+        if (this.isLoading == isLoading) return
+
+        this.isLoading = isLoading
+        if (isLoading) {
+            if (isLastItemValid()) {
+                itemsList.add(PokemonItemViewModel())
+                notifyItemInserted(itemsList.size - 1)
+            }
+        } else {
+            val loadingItem = itemsList.firstOrNull { it.pokemon == null }
+            if (loadingItem != null) {
+                val index = itemsList.indexOf(loadingItem)
+                itemsList.remove(loadingItem)
+                notifyItemRemoved(index)
+            }
+        }
+    }
+
+    private fun isLastItemValid() = itemsList.isEmpty() || itemsList.last().pokemon != null
 
     fun updateItemFavoriteStatus(item: PokemonItemViewModel) {
         val index = itemsList.indexOfFirst { it.id == item.id }

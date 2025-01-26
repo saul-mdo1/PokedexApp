@@ -15,19 +15,21 @@ class HomeViewModel(private val repository: PokedexRepository) : ViewModel() {
     val errorType = MutableLiveData<Result<*>?>(null)
     val emptyList = MutableLiveData<Boolean>()
     private var offset = 0
-    private var isLoadingMore = false
+    var isLoadingMore = MutableLiveData(false)
 
     private val _pokemonList = MutableLiveData<List<Pokemon>>()
     val pokedex: LiveData<List<Pokemon>> = _pokemonList
 
     fun getPokemons() {
-        if (isLoadingMore) return
+        if (isLoadingMore.value == true) return
 
-        isLoadingMore = true
-        loading.postValue(true)
+        if (offset == 0)
+            loading.postValue(true)
+        else
+            isLoadingMore.postValue(true)
 
         CoroutineScope(Dispatchers.IO).launch {
-            try{
+            try {
                 when (val result = repository.get(offset)) {
                     is Result.Success -> {
                         val pokemons = result.data
@@ -39,14 +41,15 @@ class HomeViewModel(private val repository: PokedexRepository) : ViewModel() {
                     }
                     is Result.Error -> { errorType.postValue(Result.Error) }
                     is Result.NetworkError -> {
-                        emptyList.postValue(true)
+                        if (pokedex.value?.isEmpty() == true)
+                            emptyList.postValue(true)
                         errorType.postValue(Result.NetworkError)
                     }
                     is Result.EmptyResponse -> { errorType.postValue(Result.EmptyResponse) }
                 }
             } finally {
                 loading.postValue(false)
-                isLoadingMore = false
+                isLoadingMore.postValue(false)
             }
         }
     }

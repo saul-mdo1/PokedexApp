@@ -84,6 +84,10 @@ class HomeActivity : AppCompatActivity() {
 
             viewModel.errorType.postValue(null)
         }
+
+        viewModel.isLoadingMore.observe(this) { isLoading ->
+            rvAdapter.showLoading(isLoading)
+        }
     }
 
     private fun initRecycler() {
