@@ -43,7 +43,7 @@ class PokedexRepositoryImpl(
                 Result.Error
             }
         } catch (e: IOException) {
-            val offlineData = pokedexDao.getAll()
+            val offlineData = pokedexDao.getPaginated(limit = 25, offset = offset)
             if (offlineData.isNotEmpty())
                 Result.Success(offlineData.map { it.toModel() })
             else

@@ -8,8 +8,8 @@ import com.example.pokedexapp.database.entity.PokemonEntity
 
 @Dao
 interface PokedexDao {
-    @Query("SELECT * FROM Pokemon")
-    suspend fun getAll(): List<PokemonEntity>
+    @Query("SELECT * FROM Pokemon LIMIT :limit OFFSET :offset")
+    suspend fun getPaginated(limit: Int, offset: Int): List<PokemonEntity>
 
     @Query("SELECT * FROM Pokemon where id=:id")
     suspend fun getById(id: Int): PokemonEntity

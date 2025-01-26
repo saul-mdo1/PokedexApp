@@ -25,6 +25,7 @@ class CircularImageView @JvmOverloads constructor(
     private var placeholder: Int = 0
     private var textColor: Int = Color.WHITE
     private var backgroundColor: Int = Color.GRAY
+
     //endregion
     init {
         // Init layout
@@ -51,10 +52,13 @@ class CircularImageView @JvmOverloads constructor(
     }
 
     fun setImage(url: String?, name: String?) {
+        val loadOfflineImage =
+            generateInitialsBitmap(extractInitials(name), backgroundColor, textColor) ?: placeholder
         if (!url.isNullOrEmpty()) {
             Glide.with(context)
                 .load(url)
                 .circleCrop()
+                .error(loadOfflineImage) // When the url can't be loaded due offline mode
                 .into(imageView)
 
             imageView.setBackgroundResource(R.drawable.border)

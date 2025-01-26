@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokedexapp.R
 import com.example.pokedexapp.databinding.PokemonItemLayoutBinding
-import timber.log.Timber
 
 class PokedexRVAdapter(
     private val itemClicked: (PokemonItemViewModel) -> Unit,
@@ -17,13 +16,14 @@ class PokedexRVAdapter(
     RecyclerView.Adapter<PokedexRVAdapter.ItemViewHolder>() {
 
     private lateinit var layout: PokemonItemLayoutBinding
+    private val itemsList: MutableList<PokemonItemViewModel> = mutableListOf()
 
-    var itemsList: List<PokemonItemViewModel> = listOf()
-        @SuppressLint("NotifyDataSetChanged")
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateList(newItems: List<PokemonItemViewModel>) {
+        val previousSize = itemsList.size
+        itemsList.addAll(newItems)
+        notifyItemRangeInserted(previousSize, newItems.size)
+    }
 
     inner class ItemViewHolder(val itemBinding: PokemonItemLayoutBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
@@ -35,8 +35,6 @@ class PokedexRVAdapter(
             itemBinding.ivSprite.setOnClickListener {
                 imageClicked(item, it)
             }
-
-            Timber.d("ViewHolder_TAG: bind: ${item.name}")
         }
     }
 

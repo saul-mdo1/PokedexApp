@@ -4,6 +4,7 @@ import com.example.pokedexapp.database.entity.PokemonEntity
 import com.example.pokedexapp.model.Pokemon
 import com.example.pokedexapp.model.Stat
 import com.example.pokedexapp.network.response.PokemonResponse
+import com.example.pokedexapp.presentation.home.recyclerview.PokemonItemViewModel
 
 object Mapper {
     fun PokemonResponse?.toModel() = Pokemon(
@@ -52,4 +53,8 @@ object Mapper {
             it.type.name
         },
     )
+
+    fun Pokemon.toItemViewModel() = PokemonItemViewModel().apply {
+        pokemon = this@toItemViewModel
+    }
 }
