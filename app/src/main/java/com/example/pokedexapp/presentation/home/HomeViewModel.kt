@@ -45,4 +45,10 @@ class HomeViewModel(private val repository: PokedexRepository) : ViewModel() {
             }
         }
     }
+
+    fun toggleFavoriteStatus(pokemonId: Int, isFavorite: Boolean) {
+        CoroutineScope(Dispatchers.IO).launch {
+            repository.toggleFavoriteStatus(pokemonId, isFavorite)
+        }
+    }
 }

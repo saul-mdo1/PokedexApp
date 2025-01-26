@@ -8,7 +8,7 @@ import com.example.pokedexapp.database.entity.PokemonEntity
 
 @Database(
     entities = [PokemonEntity::class],
-    version = 1
+    version = 2
 )
 @TypeConverters(Converters::class)
 abstract class PokedexDatabase : RoomDatabase() {

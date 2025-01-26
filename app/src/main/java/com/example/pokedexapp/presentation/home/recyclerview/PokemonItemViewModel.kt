@@ -13,4 +13,7 @@ class PokemonItemViewModel {
 
     val sprite: String?
         get() = pokemon?.sprite_front_default
+
+    val isFavorite: Boolean
+        get() = pokemon?.isFavorite ?: false
 }

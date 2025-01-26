@@ -85,6 +85,9 @@ class HomeActivity : AppCompatActivity() {
             },
             imageClicked = { item, imageView ->
                 openImageWithTransition(item, imageView)
+            },
+            favoriteClicked = { item, favorite ->
+                viewModel.toggleFavoriteStatus(item.id, favorite)
             }
         )
 

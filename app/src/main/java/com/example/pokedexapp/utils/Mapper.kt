@@ -40,7 +40,8 @@ object Mapper {
         sprite_back_default = null,
         abilities = null,
         moves = null,
-        stats = null
+        stats = null,
+        isFavorite = this.isFavorite
     )
 
     fun PokemonResponse.toEntity() = PokemonEntity(

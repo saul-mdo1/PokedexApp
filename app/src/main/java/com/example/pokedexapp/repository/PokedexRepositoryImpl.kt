@@ -33,8 +33,17 @@ class PokedexRepositoryImpl(
                 }?.mapNotNull { it.await() }
 
                 if (!detailsList.isNullOrEmpty()) {
-                    pokedexDao.insertAll(detailsList.map { it.toEntity() })
-                    Result.Success(detailsList.map { it.toModel() })
+                    pokedexDao.insertAll(
+                        detailsList.map {
+                            it.toEntity()
+                                .copy(isFavorite = pokedexDao.isFavoriteById(it.id) == true)
+                        }
+                    )
+                    Result.Success(
+                        detailsList.map {
+                            it.toModel().copy(isFavorite = pokedexDao.isFavoriteById(it.id) == true)
+                        }
+                    )
                 } else {
                     Result.EmptyResponse
                 }
@@ -70,6 +79,10 @@ class PokedexRepositoryImpl(
             Timber.d("PokedexRepositoryImpl_TAG: getById: list response error: ${e.message} ")
             Result.Error
         }
+    }
+
+    override suspend fun toggleFavoriteStatus(pokemonId: Int, isFavorite: Boolean) {
+        pokedexDao.updateFavoriteStatus(pokemonId, isFavorite)
     }
 
 }

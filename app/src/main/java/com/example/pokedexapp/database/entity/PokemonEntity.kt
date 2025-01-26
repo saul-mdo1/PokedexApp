@@ -11,5 +11,6 @@ data class PokemonEntity(
     @ColumnInfo val frontalSprite: String?,
     @ColumnInfo val height: Int,
     @ColumnInfo val weight: Int,
-    @ColumnInfo val types: List<String>
+    @ColumnInfo val types: List<String>,
+    @ColumnInfo val isFavorite: Boolean = false
 )

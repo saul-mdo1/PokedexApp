@@ -11,7 +11,8 @@ data class Pokemon(
     val sprite_back_default: String?,
     val sprite_front_default: String?,
     val front_default: String?,
-    val moves: List<String>?
+    val moves: List<String>?,
+    val isFavorite: Boolean = false
 )
 
 data class Stat(

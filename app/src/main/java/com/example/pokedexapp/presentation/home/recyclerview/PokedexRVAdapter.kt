@@ -11,7 +11,8 @@ import com.example.pokedexapp.databinding.PokemonItemLayoutBinding
 
 class PokedexRVAdapter(
     private val itemClicked: (PokemonItemViewModel) -> Unit,
-    private val imageClicked: (PokemonItemViewModel, imageView: View) -> Unit
+    private val imageClicked: (PokemonItemViewModel, imageView: View) -> Unit,
+    private val favoriteClicked: (PokemonItemViewModel, Boolean) -> Unit
 ) :
     RecyclerView.Adapter<PokedexRVAdapter.ItemViewHolder>() {
 
@@ -34,6 +35,10 @@ class PokedexRVAdapter(
 
             itemBinding.ivSprite.setOnClickListener {
                 imageClicked(item, it)
+            }
+
+            itemBinding.icon.setOnCheckedChangeListener { _, isChecked ->
+                favoriteClicked(item, isChecked)
             }
         }
     }

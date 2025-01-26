@@ -2,6 +2,8 @@ package com.example.pokedexapp.di
 
 import android.app.Application
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.pokedexapp.database.PokedexDatabase
 import com.example.pokedexapp.database.dao.PokedexDao
 import com.example.pokedexapp.network.PokedexApiService
@@ -13,13 +15,21 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 const val BASE_URL = "https://pokeapi.co/api/v2/"
 
+val MIGRATION_1_2 = object : Migration(1, 2) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("ALTER TABLE pokemon ADD COLUMN isFavorite INTEGER NOT NULL DEFAULT 0")
+    }
+}
+
 //region DATABASE
 fun provideDataBase(application: Application): PokedexDatabase =
     Room.databaseBuilder(
         application,
         PokedexDatabase::class.java,
         "pokedex"
-    ).build()
+    )
+        .addMigrations(MIGRATION_1_2)
+        .build()
 
 fun providePokedexDao(database: PokedexDatabase): PokedexDao = database.pokedexDao()
 
