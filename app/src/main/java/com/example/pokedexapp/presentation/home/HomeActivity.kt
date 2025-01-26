@@ -19,6 +19,7 @@ import com.example.pokedexapp.utils.EXTRA_POKEMON_NAME
 import com.example.pokedexapp.utils.EXTRA_TRANSITION_NAME
 import com.example.pokedexapp.utils.Mapper.toItemViewModel
 import com.example.pokedexapp.utils.POKEMON_ID
+import com.example.pokedexapp.utils.POKEMON_IS_FAVORITE
 import com.example.pokedexapp.utils.Result
 import com.example.pokedexapp.utils.showAlertError
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -103,6 +104,7 @@ class HomeActivity : AppCompatActivity() {
         Timber.d("HomeActivity_TAG: navigateToDetails: ")
         val intent = Intent(this, DetailsActivity::class.java)
         intent.putExtra(POKEMON_ID, it.id)
+        intent.putExtra(POKEMON_IS_FAVORITE, it.isFavorite)
         startActivity(intent)
     }
 

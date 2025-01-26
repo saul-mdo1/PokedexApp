@@ -57,19 +57,36 @@
                     android:visibility="@{viewModel.imageVisibility}"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="4dp"
-                    app:contentPadding="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/vName">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:contentDescription="@string/txt_description_image_details"
-                        app:imageUrl="@{viewModel.pokemon.front_default}"
-                        tools:scaleType="fitXY"
-                        tools:src="@drawable/ic_launcher_background" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <CheckBox
+                            android:id="@+id/icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/sl_favourite_24dp"
+                            android:checked="@{viewModel.isFavorite}"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:padding="12dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/txt_description_image_details"
+                            app:imageUrl="@{viewModel.pokemon.front_default}"
+                            tools:scaleType="fitXY"
+                            tools:src="@drawable/ic_launcher_background" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </com.google.android.material.card.MaterialCardView>
 
                 <!-- TYPES -->
@@ -132,10 +149,10 @@
 
                 <TextView
                     android:id="@+id/tvWeight"
+                    style="@style/TextAppearance.Material3.BodyMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    style="@style/TextAppearance.Material3.BodyMedium"
                     android:text="@{viewModel.pokemon.weight}"
                     app:layout_constraintBottom_toBottomOf="@id/tvWeightSub"
                     app:layout_constraintStart_toEndOf="@id/tvWeightSub"
@@ -156,11 +173,11 @@
 
                 <TextView
                     android:id="@+id/cgAbilities"
+                    style="@style/TextAppearance.Material3.BodyMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    style="@style/TextAppearance.Material3.BodyMedium"
                     android:text="@{viewModel.pokemon.abilities}"
                     android:visibility="@{viewModel.abilitiesVisibility}"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -266,10 +283,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
+                    android:visibility="@{viewModel.movesVisibility}"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="4dp"
                     app:contentPadding="16dp"
-                    android:visibility="@{viewModel.movesVisibility}"
                     app:layout_constraintTop_toBottomOf="@id/tvMovesSub">
 
                     <androidx.recyclerview.widget.RecyclerView

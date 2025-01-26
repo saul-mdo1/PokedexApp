@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.pokedexapp.R
 import com.example.pokedexapp.databinding.DetailsActivityLayoutBinding
 import com.example.pokedexapp.utils.POKEMON_ID
+import com.example.pokedexapp.utils.POKEMON_IS_FAVORITE
 import com.example.pokedexapp.utils.Result
 import com.example.pokedexapp.utils.showAlertError
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -28,6 +29,10 @@ class DetailsActivity : AppCompatActivity() {
         getId()
 
         viewModel.getDetails()
+
+        binding.icon.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.toggleFavoriteStatus(isChecked)
+        }
     }
 
     private fun getId() {
@@ -43,6 +48,8 @@ class DetailsActivity : AppCompatActivity() {
             pokemon.moves?.let { moves ->
                 initRecyclerView(moves)
             }
+
+            viewModel.isFavorite.postValue(intent.extras?.getBoolean(POKEMON_IS_FAVORITE, false))
         }
 
         viewModel.errorType.observe(this) { error ->

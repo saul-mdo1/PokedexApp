@@ -18,6 +18,7 @@ class DetailsViewModel(private val repository: PokedexRepository) : ViewModel() 
     private val _pokemon = MutableLiveData<Pokemon>()
     val pokemon: LiveData<Pokemon> = _pokemon
 
+    val isFavorite = MutableLiveData(false)
     val abilitiesVisibility = MutableLiveData(true)
     val statsVisibility = MutableLiveData(true)
     val movesVisibility = MutableLiveData(true)
@@ -42,6 +43,12 @@ class DetailsViewModel(private val repository: PokedexRepository) : ViewModel() 
             } finally {
                 loading.postValue(false)
             }
+        }
+    }
+
+    fun toggleFavoriteStatus(isFavorite: Boolean) {
+        CoroutineScope(Dispatchers.IO).launch {
+            repository.toggleFavoriteStatus(id, isFavorite)
         }
     }
 }
