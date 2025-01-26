@@ -12,7 +12,7 @@ import com.example.pokedexapp.databinding.DetailsActivityLayoutBinding
 import com.example.pokedexapp.utils.POKEMON_FAVORITE_STATUS
 import com.example.pokedexapp.utils.POKEMON_ID
 import com.example.pokedexapp.utils.Result
-import com.example.pokedexapp.utils.showAlertError
+import com.example.pokedexapp.utils.ui.showAlertError
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 

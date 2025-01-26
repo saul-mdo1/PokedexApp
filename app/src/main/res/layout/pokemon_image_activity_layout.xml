@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?attr/colorSurface">
 
-    <com.example.pokedexapp.utils.CircularImageView
+    <com.example.pokedexapp.utils.ui.CircularImageView
         android:id="@+id/expandedImageView"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -3,7 +3,7 @@ package com.example.pokedexapp.presentation.pokemonImage
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pokedexapp.R
-import com.example.pokedexapp.utils.CircularImageView
+import com.example.pokedexapp.utils.ui.CircularImageView
 import com.example.pokedexapp.utils.EXTRA_IMAGE_URL
 import com.example.pokedexapp.utils.EXTRA_POKEMON_NAME
 import com.example.pokedexapp.utils.EXTRA_TRANSITION_NAME

@@ -39,7 +39,7 @@
                 android:orientation="horizontal"
                 android:padding="16dp">
 
-                <com.example.pokedexapp.utils.CircularImageView
+                <com.example.pokedexapp.utils.ui.CircularImageView
                     android:id="@+id/ivSprite"
                     android:layout_width="80dp"
                     android:layout_height="80dp"

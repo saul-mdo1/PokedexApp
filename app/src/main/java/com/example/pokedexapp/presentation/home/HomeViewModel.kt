@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 class HomeViewModel(private val repository: PokedexRepository) : ViewModel() {
     val loading = MutableLiveData(false)
     val errorType = MutableLiveData<Result<*>?>(null)
+    val emptyList = MutableLiveData<Boolean>()
     private var offset = 0
     private var isLoadingMore = false
 
@@ -34,9 +35,13 @@ class HomeViewModel(private val repository: PokedexRepository) : ViewModel() {
                         currentList.addAll(pokemons)
                         _pokemonList.postValue(currentList)
                         offset += 25
+                        emptyList.postValue(false)
                     }
                     is Result.Error -> { errorType.postValue(Result.Error) }
-                    is Result.NetworkError -> { errorType.postValue(Result.NetworkError) }
+                    is Result.NetworkError -> {
+                        emptyList.postValue(true)
+                        errorType.postValue(Result.NetworkError)
+                    }
                     is Result.EmptyResponse -> { errorType.postValue(Result.EmptyResponse) }
                 }
             } finally {
