@@ -61,4 +61,12 @@ class PokedexRVAdapter(
         holder.bind(pokemon)
         holder.itemBinding.executePendingBindings()
     }
+
+    fun updateItemFavoriteStatus(item: PokemonItemViewModel) {
+        val index = itemsList.indexOfFirst { it.id == item.id }
+        if (index != -1) {
+            itemsList[index] = item
+            notifyItemChanged(index)
+        }
+    }
 }

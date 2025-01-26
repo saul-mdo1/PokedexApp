@@ -1,11 +1,15 @@
 package com.example.pokedexapp.presentation.details
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.pokedexapp.R
 import com.example.pokedexapp.databinding.DetailsActivityLayoutBinding
+import com.example.pokedexapp.utils.POKEMON_FAVORITE_STATUS
 import com.example.pokedexapp.utils.POKEMON_ID
 import com.example.pokedexapp.utils.Result
 import com.example.pokedexapp.utils.showAlertError
@@ -31,6 +35,17 @@ class DetailsActivity : AppCompatActivity() {
 
         binding.icon.setOnCheckedChangeListener { _, isChecked ->
             viewModel.toggleFavoriteStatus(isChecked)
+        }
+
+        onBackPressedDispatcher.addCallback {
+            if (viewModel.favorite != viewModel.pokemon.value?.isFavorite) {
+                val intent = Intent()
+                val isFavorite = viewModel.favorite
+                intent.putExtra(POKEMON_FAVORITE_STATUS, isFavorite)
+                intent.putExtra(POKEMON_ID, viewModel.id)
+                setResult(Activity.RESULT_OK, intent)
+            }
+            finish()
         }
     }
 

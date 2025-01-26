@@ -1,8 +1,10 @@
 package com.example.pokedexapp.presentation.home
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.databinding.DataBindingUtil
@@ -18,6 +20,7 @@ import com.example.pokedexapp.utils.EXTRA_IMAGE_URL
 import com.example.pokedexapp.utils.EXTRA_POKEMON_NAME
 import com.example.pokedexapp.utils.EXTRA_TRANSITION_NAME
 import com.example.pokedexapp.utils.Mapper.toItemViewModel
+import com.example.pokedexapp.utils.POKEMON_FAVORITE_STATUS
 import com.example.pokedexapp.utils.POKEMON_ID
 import com.example.pokedexapp.utils.Result
 import com.example.pokedexapp.utils.showAlertError
@@ -103,8 +106,24 @@ class HomeActivity : AppCompatActivity() {
         Timber.d("HomeActivity_TAG: navigateToDetails: ")
         val intent = Intent(this, DetailsActivity::class.java)
         intent.putExtra(POKEMON_ID, it.id)
-        startActivity(intent)
+        detailsResultLauncher.launch(intent)
     }
+
+    private val detailsResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val pokemonId =
+                    result.data?.getIntExtra(POKEMON_ID, -1) ?: return@registerForActivityResult
+                val isFavorite = result.data?.getBooleanExtra(POKEMON_FAVORITE_STATUS, false)
+                    ?: return@registerForActivityResult
+
+                val itemToUpdate = viewModel.pokedex.value?.first { it.id == pokemonId }
+                    ?.copy(isFavorite = isFavorite)?.toItemViewModel()
+
+                if (itemToUpdate != null)
+                    rvAdapter.updateItemFavoriteStatus(itemToUpdate)
+            }
+        }
 
     private fun openImageWithTransition(
         item: PokemonItemViewModel,

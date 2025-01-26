@@ -14,6 +14,7 @@ class DetailsViewModel(private val repository: PokedexRepository) : ViewModel() 
     val loading = MutableLiveData(true)
     val errorType = MutableLiveData<Result<*>?>(null)
     var id: Int = 0
+    var favorite = false
 
     private val _pokemon = MutableLiveData<Pokemon>()
     val pokemon: LiveData<Pokemon> = _pokemon
@@ -34,6 +35,7 @@ class DetailsViewModel(private val repository: PokedexRepository) : ViewModel() 
                         statsVisibility.postValue(!poke.stats.isNullOrEmpty())
                         movesVisibility.postValue(!poke.moves.isNullOrEmpty())
                         imageVisibility.postValue(poke.front_default != null)
+                        favorite = poke.isFavorite
                     }
                     is Result.Error -> { errorType.postValue(Result.Error) }
                     is Result.NetworkError -> { errorType.postValue(Result.NetworkError) }
@@ -48,6 +50,7 @@ class DetailsViewModel(private val repository: PokedexRepository) : ViewModel() 
     fun toggleFavoriteStatus(isFavorite: Boolean) {
         CoroutineScope(Dispatchers.IO).launch {
             repository.toggleFavoriteStatus(id, isFavorite)
+            favorite = isFavorite
         }
     }
 }
