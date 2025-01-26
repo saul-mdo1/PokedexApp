@@ -70,7 +70,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:button="@drawable/sl_favourite_24dp"
-                            android:checked="@{viewModel.isFavorite}"
+                            android:checked="@{viewModel.pokemon.isFavorite}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -212,8 +212,8 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
                             android:layout_gravity="center"
                             android:layout_marginEnd="4dp"
                             android:layout_weight="0.5"
@@ -223,8 +223,8 @@
                             tools:src="@drawable/ic_launcher_background" />
 
                         <ImageView
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
                             android:layout_gravity="center"
                             android:layout_marginStart="4dp"
                             android:layout_weight="0.5"

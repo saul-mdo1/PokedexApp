@@ -12,7 +12,7 @@ interface PokedexDao {
     suspend fun getPaginated(limit: Int, offset: Int): List<PokemonEntity>
 
     @Query("SELECT * FROM Pokemon where id=:id")
-    suspend fun getById(id: Int): PokemonEntity
+    suspend fun getById(id: Int): PokemonEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(pokemons: List<PokemonEntity>)

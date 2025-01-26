@@ -21,6 +21,17 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
     }
 }
 
+val MIGRATION_2_3 = object : Migration(2, 3) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("ALTER TABLE Pokemon ADD COLUMN abilities TEXT")
+        db.execSQL("ALTER TABLE Pokemon ADD COLUMN stats TEXT")
+        db.execSQL("ALTER TABLE Pokemon ADD COLUMN spriteBackDefault TEXT")
+        db.execSQL("ALTER TABLE Pokemon ADD COLUMN spriteFrontDefault TEXT")
+        db.execSQL("ALTER TABLE Pokemon ADD COLUMN frontDefault TEXT")
+        db.execSQL("ALTER TABLE Pokemon ADD COLUMN moves TEXT")
+    }
+}
+
 //region DATABASE
 fun provideDataBase(application: Application): PokedexDatabase =
     Room.databaseBuilder(
@@ -29,6 +40,7 @@ fun provideDataBase(application: Application): PokedexDatabase =
         "pokedex"
     )
         .addMigrations(MIGRATION_1_2)
+        .addMigrations(MIGRATION_2_3)
         .build()
 
 fun providePokedexDao(database: PokedexDatabase): PokedexDao = database.pokedexDao()

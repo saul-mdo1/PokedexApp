@@ -36,11 +36,11 @@ object Mapper {
         weight = this.weight,
         sprite_front_default = this.frontalSprite,
         types = this.types,
-        front_default = null,
-        sprite_back_default = null,
-        abilities = null,
-        moves = null,
-        stats = null,
+        front_default = this.frontDefault,
+        sprite_back_default = this.spriteBackDefault,
+        abilities = this.abilities,
+        moves = this.moves,
+        stats = this.stats,
         isFavorite = this.isFavorite
     )
 
@@ -50,9 +50,14 @@ object Mapper {
         height = this.height,
         weight = this.weight,
         frontalSprite = this.sprites.front_default,
-        types = this.types.map {
-            it.type.name
-        },
+        types = this.types.map { it.type.name },
+        abilities = this.abilities.map { it.ability.name },
+        stats = this.stats.map { Stat(it.stat.name, it.base_stat) },
+        spriteBackDefault = this.sprites.back_default,
+        spriteFrontDefault = this.sprites.front_default,
+        frontDefault = this.sprites.other?.home?.front_default,
+        moves = this.moves.map { it.move.name },
+        isFavorite = false
     )
 
     fun Pokemon.toItemViewModel() = PokemonItemViewModel().apply {

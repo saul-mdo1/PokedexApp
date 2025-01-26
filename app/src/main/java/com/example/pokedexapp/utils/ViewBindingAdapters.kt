@@ -56,7 +56,7 @@ fun imageUrl(
     imageUrl: String?
 ) {
     try {
-        Glide.with(view).load(imageUrl).into(view)
+        Glide.with(view).load(imageUrl).placeholder(R.drawable.placeholder).into(view)
     } catch (e: Exception) {
         Timber.d("ViewBindingAdapters_TAG: imageUrl: exception: $e")
     }
